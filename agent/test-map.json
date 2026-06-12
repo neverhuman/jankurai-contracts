@@ -1,17 +1,17 @@
 {
   "workspace": "jankurai-contracts",
   "tests": {
-    "AGENTS.md": {
-      "command": "bash scripts/ci-local.sh required",
-      "purpose": "verify split-family agent routing remains present"
+    "schemas/": {
+      "command": "jq empty schemas/*.json",
+      "purpose": "verify every JSON Schema under schemas/ stays well-formed JSON"
     },
-    "SPLIT.md": {
+    "contracts/": {
       "command": "bash scripts/ci-local.sh required",
-      "purpose": "verify split metadata stays coherent"
+      "purpose": "verify contract source roots stay present and routed"
     },
-    ".jeryu/": {
+    "docs/": {
       "command": "bash scripts/ci-local.sh required",
-      "purpose": "verify local Jeryu and GitHub mirror metadata"
+      "purpose": "verify agent-readable documentation stays present"
     },
     "agent/": {
       "command": "bash scripts/ci-local.sh required",
@@ -23,7 +23,51 @@
     },
     "scripts/": {
       "command": "bash scripts/ci-local.sh required",
-      "purpose": "verify local CI and fusion helpers"
+      "purpose": "verify local CI helpers"
+    },
+    "tools/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the canonical security lane wrapper stays runnable"
+    },
+    ".github/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify CI workflow entrypoints stay pinned and thin"
+    },
+    "Justfile": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the root command surface lanes are runnable"
+    },
+    "VERSION": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the declared version stays coherent with release metadata"
+    },
+    "CHANGELOG.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the changelog tracks released versions"
+    },
+    "README.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the root readme routes to the workspace layout"
+    },
+    "AGENTS.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify split-family agent routing remains present"
+    },
+    "SPLIT.md": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify split metadata stays coherent"
+    },
+    "LICENSE": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the license file is present and unmodified"
+    },
+    ".gitignore": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify the exclusion list keeps transient build paths untracked"
+    },
+    ".jeryu/": {
+      "command": "bash scripts/ci-local.sh required",
+      "purpose": "verify local Jeryu and GitHub mirror metadata"
     },
     ".": {
       "command": "bash scripts/ci-local.sh required",

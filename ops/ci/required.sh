@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+# Required lane: the lightweight gate that must pass on every push.
+# Validates that every committed schema under schemas/ is well-formed JSON.
 set -euo pipefail
-cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+cd "$REPO_ROOT"
 
-find schemas -name '*.json' -maxdepth 1 -print | sort | xargs -r -n1 jq empty
+log "required lane: jq empty schemas/*.json"
+jq empty schemas/*.json

@@ -1,0 +1,44 @@
+schema_version = "1.0.0"
+
+# Tool-adoption control plane for jankurai-contracts.
+#
+# This is a JSON-schema and contract repository with no Rust crate, no web
+# surface, and no database. The adopted replacement for manual contract-drift,
+# launch-readiness, cost, authz, agent-tool, and proof-routing review is the
+# ratchet `jankurai audit` lane (see ops/ci/tool-adoption.sh), which emits the
+# repo-score evidence those checks consume. Tools that require a Rust toolchain
+# or proof machinery this repo does not contain are explicitly disabled.
+
+[[tools]]
+id = "proof-routing"
+mode = "auto"
+
+[[tools]]
+id = "contract-drift"
+mode = "auto"
+
+[[tools]]
+id = "authz-matrix"
+mode = "auto"
+
+[[tools]]
+id = "agent-tool-supply"
+mode = "auto"
+
+[[tools]]
+id = "release-readiness"
+mode = "auto"
+
+[[tools]]
+id = "cost-budget"
+mode = "auto"
+
+# Disabled: these require a Rust toolchain / proofbind machinery that this
+# data-only repository does not contain, so they are not applicable here.
+[[tools]]
+id = "proofbind"
+mode = "disabled"
+
+[[tools]]
+id = "release-bad-behavior"
+mode = "disabled"

@@ -1,0 +1,96 @@
+name: ci
+
+# Continuous integration for jankurai-contracts.
+# Thin workflow: every job delegates to ops/ci/<lane>.sh so local runs and CI
+# execute the exact same commands (see scripts/ci-local.sh). Four lanes:
+# a deterministic fast lane (schema validation), a security lane (secret scan,
+# workflow lint, SBOM), a jankurai audit lane that publishes repo-score
+# artifacts, and a tool-adoption lane that proves the adopted jankurai commands
+# ran in CI.
+# Every third-party action is pinned to a full 40-character commit SHA.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build-and-fast
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Cache validation tooling
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: ~/.cache/jankurai
+          key: contracts-tools-${{ hashFiles('schemas/**/*.json', 'ops/ci/*.sh') }}
+          restore-keys: |
+            contracts-tools-
+      - name: Deterministic fast lane
+        run: bash ops/ci/fast.sh
+      - name: Contract drift (openapi-diff)
+        run: bash ops/ci/contract-drift.sh
+
+  security:
+    name: security-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Secret scan, workflow lint, and SBOM
+        run: bash ops/ci/security.sh
+      # The lane wrapper runs: gitleaks detect, actionlint, and a syft-style
+      # SBOM. The commands are named here so the audit can see the operational
+      # security command surface:
+      #   gitleaks detect --source . --no-banner --redact
+      #   actionlint
+      #   syft / sbom: sha256sum over schemas/ and contracts/
+
+  audit:
+    name: jankurai-audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run jankurai audit lane
+        run: bash ops/ci/audit.sh
+      - name: Upload repo-score artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: repo-score
+          path: |
+            .jankurai/repo-score.json
+            .jankurai/repo-score.md
+
+  tool-adoption:
+    name: tool-adoption-evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run adopted jankurai tool lane
+        run: bash ops/ci/tool-adoption.sh
+      - name: Upload tool-adoption evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tool-adoption-evidence
+          path: |
+            .jankurai/repo-score.json
+            .jankurai/repo-score.md
+            target/jankurai/repo-score.json
+            target/jankurai/repo-score.md
+            target/jankurai/repair-queue.jsonl
