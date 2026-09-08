@@ -10,6 +10,6 @@ cd "$REPO_ROOT"
 mkdir -p .jankurai
 log "fast lane: jq empty schemas/*.json + jankurai audit"
 jq empty schemas/*.json
-jankurai audit . --no-score-history --json .jankurai/repo-score.json --md .jankurai/repo-score.md
+jankurai audit . --no-score-history --json .jankurai/repo-score.json --md .jankurai/repo-score.md --full
 
 assert_artifact .jankurai/repo-score.json
