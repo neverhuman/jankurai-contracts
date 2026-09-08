@@ -17,6 +17,7 @@
     "tools/": "ops",
     "schemas/": "standard",
     "contracts/": "standard",
-    "docs/": "standard"
+    "docs/": "standard",
+    ".gitleaksignore": "ops"
   }
 }
