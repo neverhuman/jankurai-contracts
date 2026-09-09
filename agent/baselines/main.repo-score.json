@@ -1,6 +1,6 @@
 {
-  "report_fingerprint": "sha256:3c1879e573d06f16d324d846016202fa034b99bfb8145fe47b7f0ad7a23b05e0",
-  "input_fingerprint": "sha256:5e295118a5bf84481a4f0c9aa9d9080c407542ae3413ed62eeb0b0fc3aef65b2",
+  "report_fingerprint": "sha256:7a702591ff49472fb947bb1af3b06ce6d1bee329442c974522f2d4fb0a628d4a",
+  "input_fingerprint": "sha256:8205ac20b3bcabfa136e0e3b545b122e8a9dcc796e9e7a2a48cd93b9872daefe",
   "policy_fingerprint": "sha256:505b16e88df9d803b92eda6f646de47e6024ae8d4e7599ed3155b119e935ff63",
   "manifest_fingerprints": {
     "owner_map": "sha256:aa74f870863421db7271df741ac3e09afa45814c2b206425fbd943d8d3f42004",
@@ -9,7 +9,7 @@
     "standard_version": "sha256:c012edab9356dfd4aad90efc89a8d9dc7d981fbe8f164248bf6c0465e21508a3"
   },
   "dirty_worktree": false,
-  "generated_at": "1788918350",
+  "generated_at": "1788927801",
   "schema_url": "schemas/repo-score.schema.json",
   "standard": "jankurai",
   "standard_version": "0.9.0",
@@ -22,24 +22,24 @@
   "observed_conformance_level": "HL3",
   "conformance_decision": "pass",
   "conformance_blockers": [],
-  "repo": "/home/ubuntu/jankurai-split/jankurai-contracts",
-  "run_id": "1788918350",
-  "started_at": "1788918350",
-  "elapsed_ms": 208,
+  "repo": ".",
+  "run_id": "1788927801",
+  "started_at": "1788927801",
+  "elapsed_ms": 240,
   "scope": {
     "mode": "full",
     "paths": []
   },
-  "score": 87,
-  "raw_score": 87,
+  "score": 90,
+  "raw_score": 90,
   "decision": {
     "status": "advisory",
     "minimum_score": 85,
     "passed": true,
     "hard_findings": 0,
-    "soft_findings": 3,
+    "soft_findings": 2,
     "ratchet": {
-      "baseline_score": 87,
+      "baseline_score": 90,
       "allowed_drop": 0,
       "passed": true,
       "score_delta": 0,
@@ -52,14 +52,14 @@
     }
   },
   "git": {
-    "head": "8082c0c",
+    "head": "7f2f69d",
     "base": null,
     "changed_files": 0,
     "mode": "full",
     "dirty_worktree": false
   },
   "policy": {
-    "path": "/home/ubuntu/jankurai-split/jankurai-contracts/agent/audit-policy.toml",
+    "path": "./agent/audit-policy.toml",
     "minimum_score": 85,
     "fail_on": [
       "critical",
@@ -71,7 +71,7 @@
     ],
     "mode": "advisory",
     "standard_version": "0.9.0",
-    "auditor_version": "1.6.11",
+    "auditor_version": "1.7.0",
     "schema_version": "1.9.0",
     "paper_edition": "2026.05-ed8",
     "target_stack": "rust-ts-vite-react-postgres-bounded-python"
@@ -349,9 +349,11 @@
     {
       "name": "Data truth and workflow safety",
       "weight": 8,
-      "score": 50,
-      "weighted_points": 4.0,
-      "evidence": [],
+      "score": 90,
+      "weighted_points": 7.2,
+      "evidence": [
+        "no adopter product DB surface; standards/tooling repo classification is explicit"
+      ],
       "notes": []
     },
     {
@@ -426,7 +428,9 @@
     "has_rendered_ux_lane": true,
     "missing_categories": [],
     "evidence": {
-      "accessibility": [],
+      "accessibility": [
+        "agent/baselines/main.repo-score.json"
+      ],
       "api_mocks": [],
       "artifact_backed_proof": [
         "schemas/ux-qa-policy.schema.json",
@@ -440,6 +444,7 @@
       "layout_stability": [],
       "playwright_visual": [],
       "storybook": [
+        "agent/baselines/main.repo-score.json",
         "schemas/ux-qa-policy.schema.json"
       ],
       "visual_review": []
@@ -932,9 +937,9 @@
   "copy_code": {
     "schema_version": "1.1.0",
     "generated_by": "jankurai copy-code",
-    "generated_at": "2026-09-09T01:45:50.677009249+00:00",
-    "repo": "/home/ubuntu/jankurai-split/jankurai-contracts",
-    "auditor_version": "1.6.11",
+    "generated_at": "2026-09-09T04:23:21.728123152+00:00",
+    "repo": ".",
+    "auditor_version": "1.7.0",
     "status": "pass",
     "policy": {
       "active_source_only": true,
@@ -970,7 +975,7 @@
       ]
     },
     "summary": {
-      "files_scanned": 116,
+      "files_scanned": 120,
       "files_considered": 0,
       "active_files": 0,
       "exact_file_classes": 0,
@@ -1246,40 +1251,9 @@
       "lane": "fast",
       "docs_url": "docs/testing.md",
       "owner": "ops"
-    },
-    {
-      "severity": "medium",
-      "category": "data",
-      "path": "db/",
-      "problem": "`Data truth and workflow safety` scored 50 below the standard floor of 85",
-      "agent_fix": "move durable truth into migrations, constraints, adapters, and application-owned transactions",
-      "evidence": [
-        "Data truth and workflow safety scored 50"
-      ],
-      "check_id": "HLT-006-DIRECT-DB-WRONG-LAYER:data",
-      "hardness": "soft",
-      "confidence": 0.76,
-      "evidence_kind": "sql",
-      "rerun_command": "just fast",
-      "fingerprint": "sha256:6dc277f838aa42b508c136f6ba666d602ecefe226bc4c238b24388640ee21f82",
-      "rule_id": "HLT-006-DIRECT-DB-WRONG-LAYER",
-      "tlr": "Contracts/data",
-      "lane": "db",
-      "docs_url": "docs/audit-rubric.md#required-shape",
-      "owner": "tools"
     }
   ],
   "agent_fix_queue": [
-    {
-      "path": "db/",
-      "priority": "medium",
-      "rule_id": "HLT-006-DIRECT-DB-WRONG-LAYER",
-      "tlr": "Contracts/data",
-      "lane": "db",
-      "owner": "tools",
-      "task": "move durable truth into migrations, constraints, adapters, and application-owned transactions",
-      "why": "`Data truth and workflow safety` scored 50 below the standard floor of 85"
-    },
     {
       "path": "Justfile",
       "priority": "medium",
