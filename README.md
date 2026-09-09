@@ -1,7 +1,7 @@
 # jankurai-contracts
 
 <!-- jankurai-badge:start -->
-[![Jankurai score: 87/100](agent/jankurai-badge.svg)](agent/jankurai-badge.json)
+[![Jankurai score: 90/100](agent/jankurai-badge.svg)](agent/jankurai-badge.json)
 <!-- jankurai-badge:end -->
 
 JSON Schemas, artifact contracts, compatibility fixtures, and generated type
