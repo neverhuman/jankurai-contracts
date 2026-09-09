@@ -1,7 +1,8 @@
 # jankurai-contracts
 
-[![ci](https://img.shields.io/badge/ci-green.svg)](.github/workflows/ci.yml)
-[![jankurai score](https://img.shields.io/badge/jankurai--score-pass-brightgreen.svg)](docs/release.md)
+<!-- jankurai-badge:start -->
+[![Jankurai score: 87/100](agent/jankurai-badge.svg)](agent/jankurai-badge.json)
+<!-- jankurai-badge:end -->
 
 JSON Schemas, artifact contracts, compatibility fixtures, and generated type
 sources for the **jankurai** standard. This repository is one member of the
