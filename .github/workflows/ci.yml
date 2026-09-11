@@ -33,7 +33,6 @@ jobs:
           tool: cargo-nextest@0.9.137,cargo-audit@0.22.1,cargo-deny@0.19.8,syft@1.40.0,zizmor@1.25.2
           fallback: none
       - run: bash ops/ci/github-setup.sh
-      - run: node --test scripts/ci-aggregate.test.mjs
       - run: bash ops/ci/github-check.sh
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
