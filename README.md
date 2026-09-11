@@ -4,37 +4,30 @@
 [![Jankurai score: 90/100](agent/jankurai-badge.svg)](agent/jankurai-badge.json)
 <!-- jankurai-badge:end -->
 
+Historical score from the committed [baseline report](agent/baselines/main.repo-score.json)
+and [auditor metadata](agent/jankurai-badge.json).
+
 JSON Schemas, artifact contracts, compatibility fixtures, and generated type
 sources for the **jankurai** standard. This repository is one member of the
 Jankurai split family; read [`SPLIT.md`](SPLIT.md) for the family contract and
 [`AGENTS.md`](AGENTS.md) for agent routing rules.
 
-## Stack
+## Contributor setup
 
-The jankurai family standard targets a Rust core, a TypeScript/React/Vite
-product surface, and a PostgreSQL truth store with generated contracts. This
-particular repository is the data and contract member of that stack: it ships no
-service code, only the JSON Schemas under [`schemas/`](schemas/) and the contract
-sources under [`contracts/`](contracts/) that the Rust and TypeScript family
-repos validate against. The proof loop here is schema validation plus the
-jankurai self-audit; see [`docs/architecture.md`](docs/architecture.md).
+This repository supplies artifact schemas and compatibility fixtures to
+[Jankurai](https://github.com/neverhuman/jankurai). Start at the hub for binary
+installation, your first audit, or the complete family build.
 
-## Quick start
+Install Node.js **24**, Git, and `jq`, then validate the schemas and CI controls:
 
-```bash
-# One-command setup / validation.
-just setup
-
-# Deterministic fast lane (schema validation + self-audit).
-just fast
-
-# Full local check: fast lane plus the jankurai audit lane.
-just check
+```sh
+bash scripts/ci-local.sh required
 ```
 
-The full command surface lives in the root [`Justfile`](Justfile). Continuous
-integration runs the same lanes under
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+The complete [quality lane](ops/ci/github-check.sh) also needs the pinned auditor
+and security tools installed by [CI setup](ops/ci/github-setup.sh). It runs schema
+validation, accepted-contract drift checks, security scans and the audit against
+the protected baseline. See [testing](docs/testing.md) and the [Justfile](Justfile).
 
 ## Layout
 
